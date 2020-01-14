@@ -46,6 +46,12 @@ server.get("/api/users/:id", (req, res) => {
 server.post("/api/users", (req, res) => {
   const { name, bio } = req.body;
 
+  if (!name || !bio) {
+    res.status(400).json({
+      errorMessage: "Please provide name and bio for the user"
+    });
+  }
+
   Users.insert(req.body)
     .then(user => {
       res.status(201).json(user);
@@ -57,11 +63,6 @@ server.post("/api/users", (req, res) => {
         errorMessage: "There was an error while saving the user to the database"
       });
     });
-  if (!name || !bio) {
-    res.status(400).json({
-      errorMessage: "Please provide name and bio for the user"
-    });
-  }
 });
 
 server.delete("/api/users/:id", (req, res) => {
@@ -89,6 +90,12 @@ server.put("/api/users/:id", (req, res) => {
   const id = req.params.id;
   const { name, bio } = req.body;
 
+  if (!name || !bio) {
+    res.status(400).json({
+      errorMessage: "Please provide name and bio for the user."
+    });
+  }
+
   Users.update(id, req.body)
     .then(updated => {
       if (updated) {
@@ -105,11 +112,6 @@ server.put("/api/users/:id", (req, res) => {
         errorMessage: "The user information could not be modified."
       });
     });
-  if (!name || !bio) {
-    res.status(400).json({
-      errorMessage: "Please provide name and bio for the user."
-    });
-  }
 });
 
 const port = 8000;
