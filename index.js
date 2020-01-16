@@ -69,7 +69,7 @@ server.delete("/api/users/:id", (req, res) => {
   const id = req.params.id;
   Users.remove(id)
     .then(deleted => {
-      if (deleted) {
+      if (id) {
         res.status(200).json(deleted);
       } else {
         res.status(404).json({
